@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Reel Legends</title>
+        <link rel="stylesheet" type="text/css" href="./style.css">
+    </head>
+    <body>
+        <!-- Top Navigation Bar Elements -->
+        <header class="site-navigation-top">
+            <nav>
+                <h1>Reel Legends</h1>
+                <h2>A fishing adventure</h2>
+            </nav>
+        </header>
+
+        <!-- Container for Menu buttons-->
+        <section id="menu">
+            <article class="menu-button-box">
+                <button class="menu-button"><h3>Map</h2></button>
+            </article>
+            
+            <article class="menu-button-box">
+                <button class="menu-button"><h3>Inventory</h2></button>
+            </article>
+
+            <article class="menu-button-box">
+                <button class="menu-button" id="quest-btn"><h3>Quests</h2></button>
+            </article>
+
+            <article class="menu-button-box">
+                <button class="menu-button"><h3>Achievements</h2></button>
+            </article>
+
+            <article class="menu-button-box">
+                <button class="menu-button"><h3>Guide</h2></button>
+            </article>
+
+        </section>
+
+        <!-- Quest content expanded-->
+        <section class ="modal-background" id="quest-main-container">
+            <div id="quest-content-container">
+                <section id="quest-side-nav">
+                    <h2>Quest Log</h2>
+                    <article class="quest-title">
+                        <h3>Wishing good fishing</h3>
+                    </article>
+                    <article class="quest-title">
+                        <h3>Catch Me If You Can</h3>
+                    </article>
+                </section>
+
+                <section class="quest-main-content-box">
+                    <header>
+                        <h2>Wishing Good Fishing</h2>
+                    </header>
+
+                    <article class="quest-summary">
+                        <p>placeholder</p>
+                    </article>
+
+                    <article class="quest-instructions">
+                        <p>placeholder</p>
+                    </article>
+                </section>
+                <button class="modal-close-btn" id="quest-close-btn">x</button>
+            </div>
+        </section>
+
+        <!-- Catch Popup Window -->
+        <section class ="modal-background" id="catch-main-container">
+            <div id="catch-content-container">
+                <button class="modal-close-btn" id="catch-close-btn">x</button>
+                <header>
+                    <h4 id="catch-modal-quality">Quality</h4>
+                    <h3 id="catch-modal-type">Fish</h3>
+                    <h4 id="catch-modal-weight">Weight</h4>
+                </header>
+
+                <figure>
+                    <img src="./fish_art/snapper_common.png" id="caught-fish-img">
+                </figure>
+                <button id="release-catch-btn">Release Fish?</button>
+            </div>
+        </section>
+
+        <!-- Main container for main game elements -->
+        <section class="game-main-container">
+            <article class="cast-box" id="cast">
+                <button id="cast-button">Cast</button>
+            </article>
+
+            <article id="log">
+                <p>log</p>
+            </article>
+
+            <article id="environment">
+                <figure>
+                    <img src="./locations_art/Ed8-ay9XkAYQy-0.png"> <!-- Placeholder -->
+                </figure>
+            </article>
+
+            <article id="exp">
+                <p>0</p>
+            </article>
+                
+            <article class="item-box" id="rod">
+                <h3>Equipped Rod</h3>
+                <figure>
+                    <img src="./items_art/Icon38.png">
+                </figure>
+                <h4>Driftwood Rod</h4>
+            </article>
+                
+            <article class="item-box" id="reel">
+                <h3>Equipped Reel</h3>
+                <figure>
+                    <img src="./items_art/Icon48.png">
+                </figure>
+                <h4>Cotton Reel</h4>
+            </article>
+
+            <article class="item-box" id="hook">
+                <h3>Equipped Hook</h3>
+                <figure>
+                    <img src="./items_art/Icon44.png">
+                </figure>
+                <h4>Rusty Tin Hook</h4>
+            </article>
+
+            <article class="item-box" id="special">
+                <h3>Equipped Special</h3>
+                <figure>
+                    <img src="./items_art/Pearl.png">
+                </figure>
+                <h4>Pearl of Attraction</h4>
+            </article>
+
+        </section>
+
+        <!-- Container for Aquarium and Stats elements -->
+        <section class="stats-main-container">
+            <article class="stats-box">
+                <header class="stats-header">
+                    <h3>Aquarium</h3>
+                </header>
+                <section class="stats-content">
+                    <table>
+                        <thead>
+                            <tr>
+                                <td><h4>Fish</h4></td>
+                                <td><h4>Weight</h4></td>
+                                <td><h4>Rarity</h4></td>
+                            </tr>
+                        </thead>
+                        <tbody id="aquarium-table">
+                            
+                        </tbody>
+                    </table>
+                </section>
+            </article>
+
+            <article class="stats-box">
+                <header class="stats-header">
+                    <h3>Player Stats</h3>
+                </header>
+                <section class="stats-content">
+                    <section class="stats-content">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <td><h4>Stat</h4></td>
+                                    <td><h4>Count</h4></td>
+                                </tr>
+                            </thead>
+                            <tbody id="player-table">
+                                <tr>
+                                    <td>Times Cast</td>
+                                    <td>0</td>
+                                </tr>
+                                <tr>
+                                    <td>Fish Caught</td>
+                                    <td>0</td>
+                                </tr>
+                                <tr>
+                                    <td>Heaviest Fish</td>
+                                    <td>0 Kg</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                </section>
+            </article>
+        </section>
+
+        <!-- Footer Elements -->
+        <footer>
+            <h2>Footer placeholder</h2>
+        </footer>
+        <script src="./basescript.js" type="module"></script>
+    </body>
+</html>
