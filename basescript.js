@@ -1,6 +1,6 @@
 import * as fishImports from "./fishtypes.js";
 import * as questImports from "./questScript.js";
-//test comment
+
 //Objects
 const player = {
     userName: 'player01',
