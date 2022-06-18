@@ -121,7 +121,7 @@ function catchOrMiss() {
 
 function fishRoll() {
     let newCatch = fishImports.locationFishLootRoll(player.currentLocation);
-    newCatch.id = generateUniqueID;
+    newCatch.id = generateUniqueID();
     newCatch.setQuality();
     newCatch.setWeight();
     addExperience(newCatch); //adding experience
