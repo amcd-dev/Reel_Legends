@@ -121,6 +121,7 @@ function catchOrMiss() {
 
 function fishRoll() {
     let newCatch = fishImports.locationFishLootRoll(player.currentLocation);
+    newCatch.id = generateUniqueID;
     newCatch.setQuality();
     newCatch.setWeight();
     addExperience(newCatch); //adding experience
@@ -220,7 +221,7 @@ function fillAquariumTable() {
 
 //work out where the code for updating player stats should go
 
-//replace textnodes with 'p's in aquarium rows maybe?
+//replace textnodes with 'p's
 
 //Cast timer, expires after 1 minute with no release
 
