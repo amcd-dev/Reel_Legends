@@ -260,7 +260,7 @@ h4 {
 #map-content-container{
     display: flex;
     justify-content: center;
-    margin: 10% 0;
+    margin: 5% 0;
     background-color: var(--background-primary);
 }
 
@@ -268,6 +268,19 @@ h4 {
     display: flex;
     flex-direction: column;
     background-color: var(--background-secondary);
+}
+
+#map-grid {
+    display: grid;
+    grid-template-columns: repeat(10, 100px);
+    grid-template-rows: repeat(10, 100px);
+    grid-gap: 2px;
+}
+
+#map-figure {
+    grid-row: 1 / 11;
+    grid-column: 1 / 11;
+    overflow: hidden;
 }
 
 .location-select-container{
