@@ -44,7 +44,7 @@ const qualityTierRoll = (tierArray) => {
     };
 }
 
-//*** RARITY ROLL OBJECTS ***\\
+//*** QUALITY TIERS*** ***\\
 //*************************\\
 const tierOneQuality = [
     {
@@ -117,7 +117,7 @@ const tierFiveQuality = [
     },
 ];
 
-//*** FISH OBJECTS ***\\ ORIGINAL
+//*** FISH OBJECTS ***\\ 
 //*********************\\
 
 export const toadfish = class Toadfish {
@@ -225,6 +225,29 @@ export const startIslandShore = {
         }
     ]
 };
+
+export const secondLocationShore = {
+    locationName: 'Second location test',
+    levelReq: 5,
+    fishPool: [
+        {
+            type: kingfish,
+            rarityWeight: 5
+        },
+        {
+            type: snapper,
+            rarityWeight: 15
+        },
+        {
+            type: whiting,
+            rarityWeight: 30
+        },
+        {
+            type: toadfish,
+            rarityWeight: 50
+        }
+    ]
+}
 
 //*** CORE ITEM OBJECTS ***\\
 //*********************\\

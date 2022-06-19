@@ -1,7 +1,6 @@
 import * as fishImports from "./fishtypes.js";
 import * as questImports from "./questScript.js";
 
-//Objects
 const player = {
     userName: 'player01',
     userExp: 0,
@@ -75,6 +74,14 @@ const updateLogEventBasic = text => {
 
 //*** MENU CODE ***\\
 //******************\\
+
+//Map Modal
+const mapModal = document.getElementById('map-main-container');
+const mapMenuBtn = document.getElementById('map-btn');
+const mapCloseBtn = document.getElementById('map-close-btn');
+
+mapMenuBtn.addEventListener('click', () => { mapModal.style.display = 'flex'; });
+mapCloseBtn.addEventListener('click', () => { mapModal.style.display = 'none'; });
 
 //Quest Modal
 const questModal = document.getElementById('quest-main-container');

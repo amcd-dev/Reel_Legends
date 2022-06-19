@@ -254,28 +254,24 @@ h4 {
 }
 
 /*---------------------*/ 
-/* Catch Modal Styling */
-/*---------------------*/ 
+/* Map Modal Styling */
+/*---------------------*/
 
-#catch-content-container {
-    /*border: solid 1px red;*/
+#map-content-container{
+    display: flex;
+    justify-content: center;
+    margin: 10% 0;
+    background-color: var(--background-primary);
+}
+
+#map-side-nav{
     display: flex;
     flex-direction: column;
-    align-items: center;
-    margin: auto;
-    height: 15rem;
-    width: 10rem;
-    background-color: var(--background-primary);
-    text-align: center;
+    background-color: var(--background-secondary);
 }
 
-#catch-content-container img {
-    /*border: solid 1px red;*/
-    width: 7rem;
-}
-
-#catch-close-btn {
-    align-self: flex-end;
+.location-select-container{
+    display: flex;
 }
 
 /*---------------------*/ 
@@ -300,5 +296,28 @@ h4 {
     flex-direction: column;
 }
 
+/*---------------------*/ 
+/* Catch Modal Styling */
+/*---------------------*/ 
 
+#catch-content-container {
+    /*border: solid 1px red;*/
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: auto;
+    height: 15rem;
+    width: 10rem;
+    background-color: var(--background-primary);
+    text-align: center;
+}
+
+#catch-content-container img {
+    /*border: solid 1px red;*/
+    width: 7rem;
+}
+
+#catch-close-btn {
+    align-self: flex-end;
+}
 
