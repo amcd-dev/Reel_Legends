@@ -145,7 +145,7 @@ const showCatch = () => { //
     catchQuality.innerHTML = aquariumLastArray('quality');
     catchType.innerHTML = aquariumLastArray('type');
     catchWeight.innerHTML = aquariumLastArray('weight') + ' kg';
-    document.getElementById("caught-fish-img").src="./fish_art/kingfish_common.png";
+    document.getElementById("caught-fish-img").src = aquariumLastArray('img');
 };
 
 function catchLogging () {

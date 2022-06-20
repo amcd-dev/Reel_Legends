@@ -128,8 +128,9 @@ export const toadfish = class Toadfish {
         this.quality = '';
         this.weight = 0;
         this.exp = 25;
-        this.briefDescription = 'placeholder'
-        this.funFact = 'placeholder'
+        this.briefDescription = 'placeholder';
+        this.funFact = 'placeholder';
+        this.img = './fish_art/toadfish_common.png';
     }
     setQuality() {
         this.quality = qualityTierRoll(tierOneQuality);
@@ -147,8 +148,9 @@ export let whiting = class Whiting {
         this.quality = '';
         this.weight = 0;
         this.exp = 75;
-        this.briefDescription = 'placeholder'
-        this.funFact = 'placeholder'
+        this.briefDescription = 'placeholder';
+        this.funFact = 'placeholder';
+        this.img = './fish_art/whiting_common.png';
     }
     setQuality() {
         this.quality = qualityTierRoll(tierTwoQuality);
@@ -167,8 +169,9 @@ export let snapper =  class Snapper {
         this.quality = '';
         this.weight = 0;
         this.exp = 100;
-        this._briefDescription = 'placeholder'
-        this._funFact = 'placeholder'
+        this._briefDescription = 'placeholder';
+        this._funFact = 'placeholder';
+        this.img = './fish_art/snapper_common.png';
     }
     setQuality() {
         this.quality = qualityTierRoll(tierTwoQuality);
@@ -187,9 +190,10 @@ export let kingfish = class Kingfish {
         this.quality = '';
         this.weight = 0;
         this.exp = 250;
-        this.scientificName = 'placeholder'
-        this.briefDescription = 'placeholder'
-        this.funFact = 'placeholder'
+        this.scientificName = 'placeholder';
+        this.briefDescription = 'placeholder';
+        this.funFact = 'placeholder';
+        this.img = './fish_art/kingfish_common.png';
     }
     setQuality() {
         this.quality = qualityTierRoll(tierThreeQuality);
