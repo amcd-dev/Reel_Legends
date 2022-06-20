@@ -140,12 +140,13 @@ const showCatch = () => { //
     const catchQuality = document.getElementById('catch-modal-quality');
     const catchType = document.getElementById('catch-modal-type');
     const catchWeight = document.getElementById('catch-modal-weight');
+    const catchImage = document.getElementById("caught-fish-img");
 
     catchModal.style.display = 'flex'
     catchQuality.innerHTML = aquariumLastArray('quality');
     catchType.innerHTML = aquariumLastArray('type');
     catchWeight.innerHTML = aquariumLastArray('weight') + ' kg';
-    document.getElementById("caught-fish-img").src = aquariumLastArray('img');
+    catchImage.src = aquariumLastArray('img');
 };
 
 function catchLogging () {
@@ -213,6 +214,9 @@ function fillAquariumTable() {
     let fishNameCell = newRow.insertCell(0);
     let fishWeightCell = newRow.insertCell(1);
     let fishRarityCell = newRow.insertCell(2);
+    //testing mini image variables
+    let fishMiniImgCell = newRow.insertCell(3);
+    let fishMiniImg = document.createElement('img');
     //Adding the text
     function createTextNode(fishKey, whichCell) {
         let newText = document.createTextNode(fishKey);
@@ -221,6 +225,12 @@ function fillAquariumTable() {
     createTextNode(aquariumLastArray('type'), fishNameCell);
     createTextNode((aquariumLastArray('weight') + ' kg'), fishWeightCell);
     createTextNode(aquariumLastArray('quality'), fishRarityCell);
+    //testing mini image function
+    function setMiniImage() {
+        fishMiniImgCell.appendChild(fishMiniImg);
+        fishMiniImg.src = aquariumLastArray('img');
+    };
+    setMiniImage();
 };
 
 
