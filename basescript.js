@@ -16,6 +16,7 @@ const player = {
     lifeTimeStats: {
         timesCast: 0,
         fishCaught: 0,
+        fishReleased: 0,
         heaviestFish: 0
     },
 }
@@ -119,6 +120,11 @@ function castOut() {
 function catchOrMiss() {
     const ranNum = fishImports.generateRanNum(1000, 0);
     console.log('For catch chance the ranNum is ' + ranNum + ' The catchChance modifier is ' + catchChance() + ' and player luck is currently ' + player.luck);
+
+    //update global stats
+    player.lifeTimeStats.timesCast++;
+    document.getElementById('times-cast-data').innerHTML = player.lifeTimeStats.timesCast;
+
     if (ranNum + catchChance() <= 700) {
         return false;
     } else {
@@ -150,6 +156,11 @@ const showCatch = () => { //
 };
 
 function catchLogging () {
+    
+    //update global stats
+    player.lifeTimeStats.fishCaught++;
+    document.getElementById('fish-caught-data').innerHTML = player.lifeTimeStats.fishCaught;
+    
     fillAquariumTable();
     expBarUpdate();
     successfulEventLog();
@@ -159,15 +170,23 @@ function missLogging() {
     const newPara = document.createElement('p');  
     newPara.innerHTML = `[${new Date().toLocaleTimeString()}] You cast you line out but unfortunately nothing bites. You reel your line back in disappointment`;
     document.getElementById('log').appendChild(newPara);
-}
+};
 
 function releaseCatch() {
     updateLogEventBasic('You instead decide to release the catch, hoping for some extra luck on the next cast');
     document.getElementById('aquarium-table').deleteRow(-1);
+
     player.luck += 100; 
     player.aquarium.pop();
+
+    //update global stats
+    player.lifeTimeStats.fishReleased++;
+    player.lifeTimeStats.fishCaught--;
+    document.getElementById('fish-release-data').innerHTML = player.lifeTimeStats.fishReleased;
+    document.getElementById('fish-caught-data').innerHTML = player.lifeTimeStats.fishCaught;
+
     catchModal.style.display = 'none';
-}
+};
 
 //*** AQUARIUM, LOGGING, STATS & EXP CODE BELOW ***\\
 //************************************\\
@@ -236,6 +255,7 @@ function fillAquariumTable() {
 
 //TO DO
 
+//Clean up the aquarium table code
 
 //work out where the code for updating player stats should go
 
