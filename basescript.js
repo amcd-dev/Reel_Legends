@@ -19,7 +19,8 @@ const player = {
         fishReleased: 0,
         heaviestFish: 0
     },
-}
+    completedAchievements: []
+};
 
 //Global Variables
 let uniqueID = 0;
@@ -33,7 +34,7 @@ const generateUniqueID = () => { //Generates a unique ID
 function catchChance () {
     let newCatchChance = (player.rodType['catchModifier'] + player.reelType['catchModifier'] + player.hookType['catchModifier'] + player.luck);
     return newCatchChance;
-}
+};
 
 const aquariumLastArray = property => { //Finds the most recent fish in the aquarium array for logging purposes
     return player.aquarium[(player.aquarium.length) - 1][property]
@@ -73,8 +74,23 @@ const updateLogEventBasic = text => {
     document.getElementById('log').appendChild(newPara);
 }
 
+
 //*** MENU CODE ***\\
 //******************\\
+
+//Collapsible Menu
+const collapsibleMenu = document.getElementsByClassName('collapsible-menu-header');
+
+for (let i = 0; i < collapsibleMenu.length; i++) {
+    collapsibleMenu[i].addEventListener('click', function () {
+        let options = this.nextElementSibling;
+        if (options.style.display === 'flex') {
+            options.style.display = 'none';
+        } else {
+            options.style.display = 'flex';
+        };
+    });
+};
 
 //Map Modal
 const mapModal = document.getElementById('map-main-container');
@@ -100,8 +116,8 @@ const releaseCatchBtn = document.getElementById('release-catch-btn');
 catchCloseBtn.addEventListener('click', () => { catchModal.style.display = 'none'; });
 releaseCatchBtn.addEventListener('click', releaseCatch);
 
-//*** FISH GENERATION CODE 2.0 BELOW ***\\
-//***********************************\\
+//*** FISH GENERATION CODE ***\\
+//*****************************\\
 const castButton = document.getElementById('cast-button');
 castButton.addEventListener('click', castOut);
 
@@ -119,7 +135,7 @@ function castOut() {
 
 function catchOrMiss() {
     const ranNum = fishImports.generateRanNum(1000, 0);
-    console.log('For catch chance the ranNum is ' + ranNum + ' The catchChance modifier is ' + catchChance() + ' and player luck is currently ' + player.luck);
+    //console.log('For catch chance the ranNum is ' + ranNum + ' The catchChance modifier is ' + catchChance() + ' and player luck is currently ' + player.luck);
 
     //update global stats
     player.lifeTimeStats.timesCast++;
@@ -156,11 +172,10 @@ const showCatch = () => { //
 };
 
 function catchLogging () {
-    
-    //update global stats
     player.lifeTimeStats.fishCaught++;
     document.getElementById('fish-caught-data').innerHTML = player.lifeTimeStats.fishCaught;
     
+    achievementChecks();
     fillAquariumTable();
     expBarUpdate();
     successfulEventLog();
@@ -178,8 +193,6 @@ function releaseCatch() {
 
     player.luck += 100; 
     player.aquarium.pop();
-
-    //update global stats
     player.lifeTimeStats.fishReleased++;
     player.lifeTimeStats.fishCaught--;
     document.getElementById('fish-release-data').innerHTML = player.lifeTimeStats.fishReleased;
@@ -188,8 +201,32 @@ function releaseCatch() {
     catchModal.style.display = 'none';
 };
 
-//*** AQUARIUM, LOGGING, STATS & EXP CODE BELOW ***\\
-//************************************\\
+//*** ACHIEVEMENT CHECKING CODE ***\\
+//**********************************\\
+
+function achievementChecks () {
+    for (let i = 0; i < questImports.incompleteAchievements.length; i++) {
+        console.log(questImports.incompleteAchievements[i]);
+        console.log(player.completedAchievements);
+        //check if the current caught fish matches any achievements
+        if (questImports.incompleteAchievements[i].complete === false && questImports.incompleteAchievements[i].fishType === aquariumLastArray('type')) {
+            //check if the achievement is still in progress, if it is increment..
+            if (questImports.incompleteAchievements[i].target !== questImports.incompleteAchievements[i].satisfied) {
+                questImports.incompleteAchievements[i].satisfied++
+                questImports.incompleteAchievements[i].unsatisfied--
+                //after increment check if the achievement is now completed
+                if (questImports.incompleteAchievements[i].target === questImports.incompleteAchievements[i].satisfied) {
+                    questImports.incompleteAchievements[i].complete = true;
+                    player.completedAchievements.push(questImports.incompleteAchievements[i]);
+                    //should I also remove this from the achievements array?
+                }
+            } 
+        }
+    };
+};
+
+//*** AQUARIUM, LOGGING, STATS & EXP CODE ***\\
+//********************************************\\
 
 //Logging the event & stats
 function successfulEventLog() {
@@ -256,8 +293,6 @@ function fillAquariumTable() {
 //TO DO
 
 //Clean up the aquarium table code
-
-//work out where the code for updating player stats should go
 
 //replace textnodes with 'p's
 

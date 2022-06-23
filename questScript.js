@@ -25,7 +25,7 @@ const quest001 = {
 };
 
 const quest002 = {
-    qid: 1,
+    qid: 2,
     available: true,
     title: 'Fish Salas',
     type: 'Main',
@@ -33,7 +33,8 @@ const quest002 = {
     reward: '',
     description: '"Aye Lad, the missus has asked for a few different types of fish for a salad. Fetch me one each of a Snapper, Whiting and Kingfish"',
     requirements: {
-        fish: [{
+        fish: [
+        {
             type: 'Snapper',
             amount: 1,
             minWeight: 5,
@@ -57,3 +58,27 @@ const quest002 = {
         }],
     }
 };
+
+//*** ACHIEVEMENT OBJECTS ***\\
+//****************************\\
+
+export const incompleteAchievements = [
+    {
+        aid: 1,
+        title: 'Pan Size Snapper',
+        fishType: 'Snapper',
+        target: 2,
+        satisfied: 0,
+        unsatisfied: 2,
+        complete: false
+
+    }, {
+        aid: 2,
+        title: 'Toads',
+        fishType: 'Toadfish',
+        target: 10,
+        satisfied: 0,
+        unsatisfied: 10,
+        complete: false
+    }
+];

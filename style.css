@@ -1,5 +1,5 @@
 /* Core styling */
-/*new comment two */
+
 * {
     margin: 0;
     padding: 0;
@@ -40,7 +40,7 @@ nav {
 }
 
 footer {
-    border: solid 1px red;
+    /*border: solid 1px red;*/
     margin: 1rem auto;
     display: flex;
 }
@@ -59,6 +59,10 @@ h3 {
 
 h4 {
     font-size: 0.8rem;
+}
+
+li {
+    list-style: none;
 }
 
 .modal-background {
@@ -86,6 +90,10 @@ h4 {
 
 .modal-close-btn:hover {
     color: var(--color-white);
+}
+
+.collapsible-menu-header {
+    display: flex;
 }
 
 /* Menu Bar Styling (Further button styling below) */
@@ -285,6 +293,12 @@ h4 {
 
 .location-select-container{
     display: flex;
+    flex-direction: column;
+}
+
+.location-options {
+    display: flex;
+    flex-direction: column;
 }
 
 /*---------------------*/ 
