@@ -31,7 +31,7 @@ const generateUniqueID = () => { //Generates a unique ID
     return uniqueID;
 };
 
-function catchChance () {
+function catchChance() {
     let newCatchChance = (player.rodType['catchModifier'] + player.reelType['catchModifier'] + player.hookType['catchModifier'] + player.luck);
     return newCatchChance;
 };
@@ -69,10 +69,17 @@ const expBarUpdate = () => { //Updates the exp bar in the UI
 };
 
 const updateLogEventBasic = text => {
-    const newPara = document.createElement('p');  
+    const newPara = document.createElement('p');
     newPara.innerHTML = `[${new Date().toLocaleTimeString()}] ${text}`;
     document.getElementById('log').appendChild(newPara);
 }
+//API test
+const getTest = () => {
+    fetch('http://127.0.0.1:3001/test')
+        .then(response => {
+            console.log(response.json());
+        });
+};
 
 
 //*** MENU CODE ***\\
@@ -122,8 +129,10 @@ const castButton = document.getElementById('cast-button');
 castButton.addEventListener('click', castOut);
 
 function castOut() {
+    getTest() //API test **DELETE**
     //to do consumables & stats
     if (catchOrMiss()) {
+
         fishRoll();
         catchLogging();
         showCatch();
@@ -155,7 +164,7 @@ function fishRoll() {
     newCatch.setWeight();
     addExperience(newCatch); //adding experience
     player.luck = 0;
-    return player.aquarium.push(newCatch);    
+    return player.aquarium.push(newCatch);
 }
 
 const showCatch = () => { //
@@ -171,10 +180,10 @@ const showCatch = () => { //
     catchImage.src = aquariumLastArray('img');
 };
 
-function catchLogging () {
+function catchLogging() {
     player.lifeTimeStats.fishCaught++;
     document.getElementById('fish-caught-data').innerHTML = player.lifeTimeStats.fishCaught;
-    
+
     achievementChecks();
     fillAquariumTable();
     expBarUpdate();
@@ -182,7 +191,7 @@ function catchLogging () {
 };
 
 function missLogging() {
-    const newPara = document.createElement('p');  
+    const newPara = document.createElement('p');
     newPara.innerHTML = `[${new Date().toLocaleTimeString()}] You cast you line out but unfortunately nothing bites. You reel your line back in disappointment`;
     document.getElementById('log').appendChild(newPara);
 };
@@ -191,7 +200,7 @@ function releaseCatch() {
     updateLogEventBasic('You instead decide to release the catch, hoping for some extra luck on the next cast');
     document.getElementById('aquarium-table').deleteRow(-1);
 
-    player.luck += 100; 
+    player.luck += 100;
     player.aquarium.pop();
     player.lifeTimeStats.fishReleased++;
     player.lifeTimeStats.fishCaught--;
@@ -204,7 +213,7 @@ function releaseCatch() {
 //*** ACHIEVEMENT CHECKING CODE ***\\
 //**********************************\\
 
-function achievementChecks () {
+function achievementChecks() {
     for (let i = 0; i < questImports.incompleteAchievements.length; i++) {
         console.log(questImports.incompleteAchievements[i]);
         console.log(player.completedAchievements);
@@ -220,7 +229,7 @@ function achievementChecks () {
                     player.completedAchievements.push(questImports.incompleteAchievements[i]);
                     //should I also remove this from the achievements array?
                 }
-            } 
+            }
         }
     };
 };
@@ -230,33 +239,33 @@ function achievementChecks () {
 
 //Logging the event & stats
 function successfulEventLog() {
-    const newPara = document.createElement('p'); 
+    const newPara = document.createElement('p');
     const logContainer = document.getElementById('log');
-    
+
     newPara.innerHTML = `[${new Date().toLocaleTimeString()}] You cast out your line and reel in a <span>${aquariumLastArray('quality')}</span> ${aquariumLastArray('type')} weighing ${aquariumLastArray('weight')}kg`;
     document.getElementById('log').appendChild(newPara);
 
     const spanArray = logContainer.querySelectorAll('span');
-    
+
     function colourQuality() {
         switch (aquariumLastArray('quality')) { //Checks through the last caught fish to check for the quality, and then colour it in the log
             case 'Common':
-                spanArray[(spanArray.length)-1].style.color = '#B9B9B9';
+                spanArray[(spanArray.length) - 1].style.color = '#B9B9B9';
                 break;
             case 'Uncommon':
-                spanArray[(spanArray.length)-1].style.color = '#C5FF49';
+                spanArray[(spanArray.length) - 1].style.color = '#C5FF49';
                 break;
             case 'Rare':
-                spanArray[(spanArray.length)-1].style.color = '#60B2FF';
+                spanArray[(spanArray.length) - 1].style.color = '#60B2FF';
                 break;
             case 'Exceptional':
-                spanArray[(spanArray.length)-1].style.color = '#FF9C07';
+                spanArray[(spanArray.length) - 1].style.color = '#FF9C07';
                 break;
             case 'Legendary':
-                spanArray[(spanArray.length)-1].style.color = 'FFE600';
+                spanArray[(spanArray.length) - 1].style.color = 'FFE600';
                 break;
             case 'Mythical':
-                spanArray[(spanArray.length)-1].style.color = '#8F00FF';
+                spanArray[(spanArray.length) - 1].style.color = '#8F00FF';
                 break;
         };
     };
