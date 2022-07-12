@@ -33,7 +33,7 @@ const qualityTierRoll = (tierArray) => {
         totalWeight += tierArray[i].rarityWeight;        
     };
     //console.log('The Total weight of the loot array is ' + totalWeight);
-    let ranNum = Math.floor(Math.random() * (totalWeight - 0 + 1)) + 0 //Rolls a random number within the total weight
+    let ranNum = Math.floor(Math.random() * (totalWeight + 1)) //Rolls a random number within the total weight
     console.log('The random number rolled is ' + ranNum)
     for (let j = 0; j < tierArray.length; j++) { 
         runningTotal += tierArray[j].rarityWeight;
@@ -124,7 +124,7 @@ export const toadfish = class Toadfish {
     constructor(id) {
         this.id = id;
         this.type = 'Toadfish';
-        this.tier = 1,
+        this.tier = 1;
         this.quality = '';
         this.weight = 0;
         this.exp = 25;
@@ -144,7 +144,7 @@ export let whiting = class Whiting {
     constructor(id) {
         this.id = id;
         this.type = 'Whiting';
-        this.tier = 2,
+        this.tier = 2;
         this.quality = '';
         this.weight = 0;
         this.exp = 75;
@@ -165,7 +165,7 @@ export let snapper =  class Snapper {
     constructor(id) {
         this.id = id;
         this.type = 'Snapper';
-        this.tier = 2,
+        this.tier = 2;
         this.quality = '';
         this.weight = 0;
         this.exp = 100;
@@ -186,7 +186,7 @@ export let kingfish = class Kingfish {
     constructor(id) {
         this.id = id;
         this.type = 'Kingfish';
-        this.tier = 3,
+        this.tier = 3;
         this.quality = '';
         this.weight = 0;
         this.exp = 250;

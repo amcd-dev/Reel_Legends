@@ -23,6 +23,7 @@ const player = {
 };
 
 //Global Variables
+//TODO remove once connected to DB
 let uniqueID = 0;
 
 //Global Functions
@@ -32,8 +33,7 @@ const generateUniqueID = () => { //Generates a unique ID
 };
 
 function catchChance() {
-    let newCatchChance = (player.rodType['catchModifier'] + player.reelType['catchModifier'] + player.hookType['catchModifier'] + player.luck);
-    return newCatchChance;
+    return (player.rodType['catchModifier'] + player.reelType['catchModifier'] + player.hookType['catchModifier'] + player.luck);
 };
 
 const aquariumLastArray = property => { //Finds the most recent fish in the aquarium array for logging purposes
@@ -60,7 +60,7 @@ const addExperience = fish => { //Gets the base experience of the fish caught th
         case 'Mythical':
             player.userExp += (fish.exp + 600);
             break;
-    };
+    }
 };
 
 const expBarUpdate = () => { //Updates the exp bar in the UI
@@ -73,14 +73,6 @@ const updateLogEventBasic = text => {
     newPara.innerHTML = `[${new Date().toLocaleTimeString()}] ${text}`;
     document.getElementById('log').appendChild(newPara);
 }
-//API test 1.0
-
-// const getTest = () => {
-//     fetch('http://127.0.0.1:3001/test')
-//         .then(response => {
-//             console.log(response);
-//         });
-// };
 
 //API test 2.0 - Testing to try get JSON model working
 const getTest = () => {
@@ -103,9 +95,9 @@ for (let i = 0; i < collapsibleMenu.length; i++) {
             options.style.display = 'none';
         } else {
             options.style.display = 'flex';
-        };
+        }
     });
-};
+}
 
 //Map Modal
 const mapModal = document.getElementById('map-main-container');
@@ -162,7 +154,7 @@ function catchOrMiss() {
         return false;
     } else {
         return true;
-    };
+    }
 }
 
 function fishRoll() {
@@ -196,13 +188,13 @@ function catchLogging() {
     fillAquariumTable();
     expBarUpdate();
     successfulEventLog();
-};
+}
 
 function missLogging() {
     const newPara = document.createElement('p');
     newPara.innerHTML = `[${new Date().toLocaleTimeString()}] You cast you line out but unfortunately nothing bites. You reel your line back in disappointment`;
     document.getElementById('log').appendChild(newPara);
-};
+}
 
 function releaseCatch() {
     updateLogEventBasic('You instead decide to release the catch, hoping for some extra luck on the next cast');
@@ -216,7 +208,7 @@ function releaseCatch() {
     document.getElementById('fish-caught-data').innerHTML = player.lifeTimeStats.fishCaught;
 
     catchModal.style.display = 'none';
-};
+}
 
 //*** ACHIEVEMENT CHECKING CODE ***\\
 //**********************************\\
@@ -239,8 +231,8 @@ function achievementChecks() {
                 }
             }
         }
-    };
-};
+    }
+}
 
 //*** AQUARIUM, LOGGING, STATS & EXP CODE ***\\
 //********************************************\\
@@ -304,26 +296,17 @@ function fillAquariumTable() {
         fishMiniImg.src = aquariumLastArray('img');
     };
     setMiniImage();
-};
+}
 
 
-//TO DO
-
-//Clean up the aquarium table code
-
-//replace textnodes with 'p's
-
-//Cast timer, expires after 1 minute with no release
-
-//Code an achievment
-
-//Code a quest
-
-//Change weight & rarity code so that weight is generated after rarity, for heavier fish
-
-//Rarity levels can only be reached with certain equipment. I.E max and min weights must be set lower than the number
-//possibly new function for generating rarity which checks items equipped which have their own property setting the min / max
-
-//Console testing
-
-//Time based - Every 5 minutes can cast. Can choose whether to auto cast every 5 minutes, or let them stack for manual use
+//TODO
+//TODO Clean up the aquarium table code
+//TODO replace textnodes with 'p's
+//TODO Cast timer, expires after 1 minute with no release
+//TODO Code an achievment
+//TODO Code a quest
+//TODO Change weight & rarity code so that weight is generated after rarity, for heavier fish
+//TODO Rarity levels can only be reached with certain equipment. I.E max and min weights must be set lower than the number
+//TODO possibly new function for generating rarity which checks items equipped which have their own property setting the min / max
+//TODO Console testing
+//TODO Time based - Every 5 minutes can cast. Can choose whether to auto cast every 5 minutes, or let them stack for manual use
