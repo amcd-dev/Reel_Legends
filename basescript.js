@@ -73,14 +73,22 @@ const updateLogEventBasic = text => {
     newPara.innerHTML = `[${new Date().toLocaleTimeString()}] ${text}`;
     document.getElementById('log').appendChild(newPara);
 }
-//API test
+//API test 1.0
+
+// const getTest = () => {
+//     fetch('http://127.0.0.1:3001/test')
+//         .then(response => {
+//             console.log(response);
+//         });
+// };
+
+//API test 2.0 - Testing to try get JSON model working
 const getTest = () => {
     fetch('http://127.0.0.1:3001/test')
-        .then(response => {
-            console.log(response.json());
-        });
-};
+        .then(response => response.json())
+        .then(data => console.log(data));
 
+};
 
 //*** MENU CODE ***\\
 //******************\\
@@ -167,7 +175,7 @@ function fishRoll() {
     return player.aquarium.push(newCatch);
 }
 
-const showCatch = () => { //
+const showCatch = () => {
     const catchQuality = document.getElementById('catch-modal-quality');
     const catchType = document.getElementById('catch-modal-type');
     const catchWeight = document.getElementById('catch-modal-weight');
