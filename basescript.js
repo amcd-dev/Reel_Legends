@@ -34,7 +34,7 @@ const generateUniqueID = () => { //Generates a unique ID
 
 function catchChance() {
     return (player.rodType['catchModifier'] + player.reelType['catchModifier'] + player.hookType['catchModifier'] + player.luck);
-};
+}
 
 const aquariumLastArray = property => { //Finds the most recent fish in the aquarium array for logging purposes
     return player.aquarium[(player.aquarium.length) - 1][property]
@@ -112,7 +112,7 @@ const questModal = document.getElementById('quest-main-container');
 const questMenuBtn = document.getElementById('quest-btn');
 const questCloseBtn = document.getElementById('quest-close-btn');
 
-questMenuBtn.addEventListener('click', () => { questModal.style.display = 'flex'; }); //short hand one line for practise
+questMenuBtn.addEventListener('click', () => { questModal.style.display = 'flex'; }); //shorthand one line for practise
 questCloseBtn.addEventListener('click', () => { questModal.style.display = 'none'; });
 
 //Catch Modal
@@ -129,33 +129,32 @@ const castButton = document.getElementById('cast-button');
 castButton.addEventListener('click', castOut);
 
 function castOut() {
-    getTest() //API test **DELETE**
-    //to do consumables & stats
+    // getTest() //API test **DELETE**
     if (catchOrMiss()) {
 
-        fishRoll();
+        fishRoll(); //TODO up to this point <---- learning SQL
         catchLogging();
         showCatch();
     } else {
         missLogging();
-    };
-    console.log(player.aquarium);
-};
-
-function catchOrMiss() {
-    const ranNum = fishImports.generateRanNum(1000, 0);
-    //console.log('For catch chance the ranNum is ' + ranNum + ' The catchChance modifier is ' + catchChance() + ' and player luck is currently ' + player.luck);
-
-    //update global stats
-    player.lifeTimeStats.timesCast++;
-    document.getElementById('times-cast-data').innerHTML = player.lifeTimeStats.timesCast;
-
-    if (ranNum + catchChance() <= 700) {
-        return false;
-    } else {
-        return true;
     }
+    console.log(player.aquarium);
 }
+
+// function catchOrMiss() {
+//     const ranNum = fishImports.generateRanNum(1000, 0);
+//     //console.log('For catch chance the ranNum is ' + ranNum + ' The catchChance modifier is ' + catchChance() + ' and player luck is currently ' + player.luck);
+//
+//     //update global stats
+//     player.lifeTimeStats.timesCast++;
+//     document.getElementById('times-cast-data').innerHTML = player.lifeTimeStats.timesCast;
+//
+//     if (ranNum + catchChance() <= 700) {
+//         return false;
+//     } else {
+//         return true;
+//     }
+// }
 
 function fishRoll() {
     let newCatch = fishImports.locationFishLootRoll(player.currentLocation);
@@ -267,8 +266,8 @@ function successfulEventLog() {
             case 'Mythical':
                 spanArray[(spanArray.length) - 1].style.color = '#8F00FF';
                 break;
-        };
-    };
+        }
+    }
     colourQuality();
 }
 
@@ -294,7 +293,7 @@ function fillAquariumTable() {
     function setMiniImage() {
         fishMiniImgCell.appendChild(fishMiniImg);
         fishMiniImg.src = aquariumLastArray('img');
-    };
+    }
     setMiniImage();
 }
 
@@ -303,7 +302,7 @@ function fillAquariumTable() {
 //TODO Clean up the aquarium table code
 //TODO replace textnodes with 'p's
 //TODO Cast timer, expires after 1 minute with no release
-//TODO Code an achievment
+//TODO Code an achievement
 //TODO Code a quest
 //TODO Change weight & rarity code so that weight is generated after rarity, for heavier fish
 //TODO Rarity levels can only be reached with certain equipment. I.E max and min weights must be set lower than the number
