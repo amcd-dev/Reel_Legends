@@ -132,7 +132,7 @@ function castOut() {
     // getTest() //API test **DELETE**
     if (catchOrMiss()) {
 
-        fishRoll(); //TODO up to this point <---- learning SQL
+        fishRoll(); //TODO up to this point <----
         catchLogging();
         showCatch();
     } else {
