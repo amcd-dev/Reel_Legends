@@ -1,66 +1,15 @@
 import * as fishImports from "./fishtypes.js";
 import * as questImports from "./questScript.js";
 
-const player = {
-    userName: 'player01',
-    userExp: 0,
-    userLevel: 0,
-    luck: 0,
-    rodType: fishImports.rodTierOne,
-    reelType: fishImports.reelTierOne,
-    hookType: fishImports.hookTierOne,
-    baitType: '',
-    specialItem: '',
-    currentLocation: fishImports.startIslandShore,
-    aquarium: [],
-    lifeTimeStats: {
-        timesCast: 0,
-        fishCaught: 0,
-        fishReleased: 0,
-        heaviestFish: 0
-    },
-    completedAchievements: []
-};
 
 //Global Variables
-//TODO remove once connected to DB
-let uniqueID = 0;
+let latestCaughtFish = {};
+let latestPlayerState = {};
+let latestAquariumState = [];
 
 //Global Functions
-const generateUniqueID = () => { //Generates a unique ID
-    uniqueID++
-    return uniqueID;
-};
-
-function catchChance() {
-    return (player.rodType['catchModifier'] + player.reelType['catchModifier'] + player.hookType['catchModifier'] + player.luck);
-}
-
 const aquariumLastArray = property => { //Finds the most recent fish in the aquarium array for logging purposes
     return player.aquarium[(player.aquarium.length) - 1][property]
-};
-
-const addExperience = fish => { //Gets the base experience of the fish caught then adds extra for the rarity
-    switch (fish.quality) {
-        case 'Common':
-            player.userExp += (fish.exp + 10);
-            break;
-        case 'Uncommon':
-            player.userExp += (fish.exp + 25);
-            break;
-        case 'Rare':
-            player.userExp += (fish.exp + 50);
-            break;
-        case 'Exceptional':
-            player.userExp += (fish.exp + 150);
-            break;
-        case 'Legendary':
-            player.userExp += (fish.exp + 300);
-            break;
-        case 'Mythical':
-            player.userExp += (fish.exp + 600);
-            break;
-    }
 };
 
 const expBarUpdate = () => { //Updates the exp bar in the UI
@@ -74,13 +23,34 @@ const updateLogEventBasic = text => {
     document.getElementById('log').appendChild(newPara);
 }
 
-//API test 2.0 - Testing to try get JSON model working
-const getTest = () => {
-    fetch('http://127.0.0.1:3001/test')
+//APIs
+const getFish = async () => {
+    console.log('Fetching Fish...')
+    await fetch('http://127.0.0.1:3001/getFish')
         .then(response => response.json())
-        .then(data => console.log(data));
-
+        .then(data => latestCaughtFish = data);
 };
+
+const getPlayerState = async () => {
+    console.log('Fetching Player State')
+    await fetch('http://127.0.0.1:3001/getPlayerState')
+        .then(response => response.json())
+        .then(data => latestPlayerState = data);
+}
+
+const getPlayerAquarium = async () => {
+    console.log('Fetching Player State')
+    await fetch('http://127.0.0.1:3001/getAquariumState')
+        .then(response => response.json())
+        .then(data => latestAquariumState = data);
+}
+//*** ON PAGE LOAD CODE ***\\
+//**************************\\
+//TODO combine into one function and take off await?
+await getPlayerState()
+console.log('logging player state on page load', latestPlayerState)
+await getPlayerAquarium()
+console.log('logging aquarium state on page load', latestAquariumState)
 
 //*** MENU CODE ***\\
 //******************\\
@@ -128,40 +98,28 @@ releaseCatchBtn.addEventListener('click', releaseCatch);
 const castButton = document.getElementById('cast-button');
 castButton.addEventListener('click', castOut);
 
-function castOut() {
-    // getTest() //API test **DELETE**
-    if (catchOrMiss()) {
+async function castOut() {
+    console.log('starting cast fetch & checking last caught fish: ', latestCaughtFish)
+    await getFish()
+    console.log('finished cast fetch & checking last caught fish', latestCaughtFish)
 
-        fishRoll(); //TODO up to this point <----
-        catchLogging();
-        showCatch();
-    } else {
-        missLogging();
-    }
-    console.log(player.aquarium);
+    //TODO up to this point <----
+
+    // if (catchOrMiss()) {
+    //
+    //     fishRoll();
+    //     catchLogging();
+    //     showCatch();
+    // } else {
+    //     missLogging();
+    // }
+    // console.log(player.aquarium);
 }
-
-// function catchOrMiss() {
-//     const ranNum = fishImports.generateRanNum(1000, 0);
-//     //console.log('For catch chance the ranNum is ' + ranNum + ' The catchChance modifier is ' + catchChance() + ' and player luck is currently ' + player.luck);
-//
-//     //update global stats
-//     player.lifeTimeStats.timesCast++;
-//     document.getElementById('times-cast-data').innerHTML = player.lifeTimeStats.timesCast;
-//
-//     if (ranNum + catchChance() <= 700) {
-//         return false;
-//     } else {
-//         return true;
-//     }
-// }
 
 function fishRoll() {
     let newCatch = fishImports.locationFishLootRoll(player.currentLocation);
-    newCatch.id = generateUniqueID();
-    newCatch.setQuality();
-    newCatch.setWeight();
-    addExperience(newCatch); //adding experience
+
+    newCatch.setWeight(); //TODO up to this point <----
     player.luck = 0;
     return player.aquarium.push(newCatch);
 }
