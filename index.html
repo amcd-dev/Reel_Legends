@@ -36,6 +36,18 @@
                 <button class="menu-button"><h3>Guide</h3></button>
             </article>
 
+            <article class="menu-button-box">
+                <button class="menu-button"><h3>Player</h3></button>
+            </article>
+
+            <article class="menu-button-box">
+                <button class="menu-button"><h3>Shop</h3></button>
+            </article>
+
+            <article class="menu-button-box">
+                <button class="menu-button"><h3>Stats</h3></button>
+            </article>
+
         </section>
 
         <!--Map Content expanded -->
@@ -146,6 +158,7 @@
 
         <!-- Main container for main game elements -->
         <section class="game-main-container">
+
             <article class="cast-box" id="cast">
                 <button id="cast-button">Cast</button>
             </article>
@@ -163,38 +176,63 @@
             <article id="exp">
                 <p>0</p>
             </article>
-                
-            <article class="item-box" id="rod">
-                <h3>Equipped Rod</h3>
-                <figure>
-                    <img src="./items_art/Icon38.png">
-                </figure>
-                <h4>Driftwood Rod</h4>
-            </article>
-                
-            <article class="item-box" id="reel">
-                <h3>Equipped Reel</h3>
-                <figure>
-                    <img src="./items_art/Icon48.png">
-                </figure>
-                <h4>Cotton Reel</h4>
-            </article>
+            <div class="current-items-container">
+                <article class="item-box" id="rod">
+                    <button class="item-drawer-button" id="rod-drawer-button"></button>
+                    <figure>
+                        <img src="./items_art/Icon38.png" alt="placeholder">
+                    </figure>
+                    <h4>Driftwood Rod</h4>
+                </article>
 
-            <article class="item-box" id="hook">
-                <h3>Equipped Hook</h3>
-                <figure>
-                    <img src="./items_art/Icon44.png">
-                </figure>
-                <h4>Rusty Tin Hook</h4>
-            </article>
+                <article class="item-box" id="reel">
+                    <button class="item-drawer-button" id="reel-drawer-button"></button>
+                    <figure>
+                        <img src="./items_art/Icon48.png" alt="placeholder">
+                    </figure>
+                    <h4>Cotton Reel</h4>
+                </article>
 
-            <article class="item-box" id="special">
-                <h3>Equipped Special</h3>
-                <figure>
-                    <img src="./items_art/Pearl.png">
-                </figure>
-                <h4>Pearl of Attraction</h4>
-            </article>
+                <article class="item-box" id="hook">
+                    <button class="item-drawer-button" id="hook-drawer-button"></button>
+                    <figure>
+                        <img src="./items_art/Icon44.png" alt="placeholder">
+                    </figure>
+                    <h4>Rusty Tin Hook</h4>
+                </article>
+
+                <article class="item-box" id="bait">
+                    <button class="item-drawer-button" id="bait-drawer-button"></button>
+                    <figure>
+                        <img src="./items_art/Bug.png" alt="placeholder">
+                    </figure>
+                    <h4>Dirty Worms</h4>
+                </article>
+
+                <article class="item-box" id="special">
+                    <button class="item-drawer-button" id="special-drawer-button"></button>
+                    <figure>
+                        <img src="./items_art/Pearl.png" alt="placeholder">
+                    </figure>
+                    <h4>Pearl of Attraction</h4>
+                </article>
+
+                <article class="item-box" id="storage">
+                    <button class="item-drawer-button" id="storage-drawer-button"></button>
+                    <figure>
+                        <img src="./items_art/VaseA0.png" alt="placeholder">
+                    </figure>
+                    <h4>Plastic Bucket</h4>
+                </article>
+
+                <article class="item-box" id="boat">
+                    <button class="item-drawer-button" id="boat-drawer-button"></button>
+                    <figure>
+                        <img src="./items_art/Horseshoe.png" alt="placeholder">
+                    </figure>
+                    <h4>Cut Barrel</h4>
+                </article>
+            </div>
 
         </section>
 

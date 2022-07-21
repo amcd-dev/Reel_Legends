@@ -1,20 +1,17 @@
-import * as fishImports from "./fishtypes.js";
 import * as questImports from "./questScript.js";
 
 
 //Global Variables
+
 let latestCaughtFish = {};
 let latestPlayerState = {};
 let latestAquariumState = [];
 
 //Global Functions
-const aquariumLastArray = property => { //Finds the most recent fish in the aquarium array for logging purposes
-    return player.aquarium[(player.aquarium.length) - 1][property]
-};
 
 const expBarUpdate = () => { //Updates the exp bar in the UI
     const expText = document.getElementById('exp').children;
-    expText[0].innerHTML = player.userExp;
+    expText[0].innerHTML = latestPlayerState.user_exp;
 };
 
 const updateLogEventBasic = text => {
@@ -24,11 +21,21 @@ const updateLogEventBasic = text => {
 }
 
 //APIs
+
+const getCatchOrMiss = async () => {
+    console.log('Initiating catch or miss API call...')
+    const response = await fetch('http://127.0.0.1:3001/getCatchOrMiss')
+    return await response.json()
+}
+
 const getFish = async () => {
     console.log('Fetching Fish...')
-    await fetch('http://127.0.0.1:3001/getFish')
-        .then(response => response.json())
-        .then(data => latestCaughtFish = data);
+    const response = await fetch('http://127.0.0.1:3001/getFish')
+    latestCaughtFish = await response.json()
+    // Alternative method:
+    // await fetch('http://127.0.0.1:3001/getFish')
+    //     .then(response => response.json())
+    //     .then(data => latestCaughtFish = data);
 };
 
 const getPlayerState = async () => {
@@ -39,14 +46,23 @@ const getPlayerState = async () => {
 }
 
 const getPlayerAquarium = async () => {
-    console.log('Fetching Player State')
+    console.log('Fetching Player Aquarium')
     await fetch('http://127.0.0.1:3001/getAquariumState')
         .then(response => response.json())
         .then(data => latestAquariumState = data);
 }
+
+const removeFromAquarium = async (id) => {
+    console.log('Deleting from player_aquarium Database')
+    await fetch(`http://127.0.0.1:3001/aquarium/${id}`, {
+        method: 'DELETE'
+    })
+        .then(response => response.json())
+        .then(data => console.log(data))
+} //TODO <--- Up to here
 //*** ON PAGE LOAD CODE ***\\
 //**************************\\
-//TODO combine into one function and take off await?
+//TODO combine into one function and take off await
 await getPlayerState()
 console.log('logging player state on page load', latestPlayerState)
 await getPlayerAquarium()
@@ -99,29 +115,26 @@ const castButton = document.getElementById('cast-button');
 castButton.addEventListener('click', castOut);
 
 async function castOut() {
-    console.log('starting cast fetch & checking last caught fish: ', latestCaughtFish)
-    await getFish()
-    console.log('finished cast fetch & checking last caught fish', latestCaughtFish)
 
-    //TODO up to this point <----
-
+    if (await getCatchOrMiss() === true) {
+        console.log('starting cast fetch & checking last caught fish: ', latestCaughtFish);
+        await getFish();
+        console.log('finished cast fetch & checking last caught fish', latestCaughtFish);
+        console.log('Popping up the catch screen');
+        showCatch();
+        expBarUpdate(); //TODO needs to fetch first, turn into async
+        successfulEventLog();
+        fillAquariumTable();
+        //TODO up to this point <----
+    } else {
+        missLogging();
+    }
     // if (catchOrMiss()) {
-    //
-    //     fishRoll();
     //     catchLogging();
-    //     showCatch();
     // } else {
     //     missLogging();
     // }
     // console.log(player.aquarium);
-}
-
-function fishRoll() {
-    let newCatch = fishImports.locationFishLootRoll(player.currentLocation);
-
-    newCatch.setWeight(); //TODO up to this point <----
-    player.luck = 0;
-    return player.aquarium.push(newCatch);
 }
 
 const showCatch = () => {
@@ -131,21 +144,11 @@ const showCatch = () => {
     const catchImage = document.getElementById("caught-fish-img");
 
     catchModal.style.display = 'flex'
-    catchQuality.innerHTML = aquariumLastArray('quality');
-    catchType.innerHTML = aquariumLastArray('type');
-    catchWeight.innerHTML = aquariumLastArray('weight') + ' kg';
-    catchImage.src = aquariumLastArray('img');
+    catchQuality.innerHTML = latestCaughtFish.caught_quality;
+    catchType.innerHTML = latestCaughtFish.caught_name;
+    catchWeight.innerHTML = latestCaughtFish.caught_weight_kg + ' kg';
+    catchImage.src = latestCaughtFish.caught_fish_imgsrc;
 };
-
-function catchLogging() {
-    player.lifeTimeStats.fishCaught++;
-    document.getElementById('fish-caught-data').innerHTML = player.lifeTimeStats.fishCaught;
-
-    achievementChecks();
-    fillAquariumTable();
-    expBarUpdate();
-    successfulEventLog();
-}
 
 function missLogging() {
     const newPara = document.createElement('p');
@@ -153,16 +156,13 @@ function missLogging() {
     document.getElementById('log').appendChild(newPara);
 }
 
-function releaseCatch() {
+async function releaseCatch() {
+    await removeFromAquarium(latestCaughtFish.id)
     updateLogEventBasic('You instead decide to release the catch, hoping for some extra luck on the next cast');
     document.getElementById('aquarium-table').deleteRow(-1);
-
-    player.luck += 100;
-    player.aquarium.pop();
-    player.lifeTimeStats.fishReleased++;
-    player.lifeTimeStats.fishCaught--;
-    document.getElementById('fish-release-data').innerHTML = player.lifeTimeStats.fishReleased;
-    document.getElementById('fish-caught-data').innerHTML = player.lifeTimeStats.fishCaught;
+    //TODO when ready to track lifetime data again
+    // document.getElementById('fish-release-data').innerHTML = player.lifeTimeStats.fishReleased;
+    // document.getElementById('fish-caught-data').innerHTML = player.lifeTimeStats.fishCaught;
 
     catchModal.style.display = 'none';
 }
@@ -175,7 +175,7 @@ function achievementChecks() {
         console.log(questImports.incompleteAchievements[i]);
         console.log(player.completedAchievements);
         //check if the current caught fish matches any achievements
-        if (questImports.incompleteAchievements[i].complete === false && questImports.incompleteAchievements[i].fishType === aquariumLastArray('type')) {
+        if (questImports.incompleteAchievements[i].complete === false && questImports.incompleteAchievements[i].fishType === aquariumLastFish('type')) {
             //check if the achievement is still in progress, if it is increment..
             if (questImports.incompleteAchievements[i].target !== questImports.incompleteAchievements[i].satisfied) {
                 questImports.incompleteAchievements[i].satisfied++
@@ -199,13 +199,14 @@ function successfulEventLog() {
     const newPara = document.createElement('p');
     const logContainer = document.getElementById('log');
 
-    newPara.innerHTML = `[${new Date().toLocaleTimeString()}] You cast out your line and reel in a <span>${aquariumLastArray('quality')}</span> ${aquariumLastArray('type')} weighing ${aquariumLastArray('weight')}kg`;
+    newPara.innerHTML = `[${new Date().toLocaleTimeString()}] You cast out your line and reel in a <span>${latestCaughtFish.caught_quality}</span> ${latestCaughtFish.caught_name} weighing ${latestCaughtFish.caught_weight_kg}kg`;
     document.getElementById('log').appendChild(newPara);
 
     const spanArray = logContainer.querySelectorAll('span');
 
     function colourQuality() {
-        switch (aquariumLastArray('quality')) { //Checks through the last caught fish to check for the quality, and then colour it in the log
+        switch (latestCaughtFish.caught_quality) { //Checks through the last caught fish to check for the quality, and
+            // then colour it in the log
             case 'Common':
                 spanArray[(spanArray.length) - 1].style.color = '#B9B9B9';
                 break;
@@ -244,26 +245,30 @@ function fillAquariumTable() {
         let newText = document.createTextNode(fishKey);
         whichCell.appendChild(newText);
     };
-    createTextNode(aquariumLastArray('type'), fishNameCell);
-    createTextNode((aquariumLastArray('weight') + ' kg'), fishWeightCell);
-    createTextNode(aquariumLastArray('quality'), fishRarityCell);
+    createTextNode(latestCaughtFish.caught_name, fishNameCell);
+    createTextNode((latestCaughtFish.caught_weight_kg + ' kg'), fishWeightCell);
+    createTextNode(latestCaughtFish.caught_quality, fishRarityCell);
     //testing mini image function
     function setMiniImage() {
         fishMiniImgCell.appendChild(fishMiniImg);
-        fishMiniImg.src = aquariumLastArray('img');
+        fishMiniImg.src = latestCaughtFish.caught_fish_imgsrc;
     }
     setMiniImage();
 }
 
 
 //TODO
-//TODO Clean up the aquarium table code
-//TODO replace textnodes with 'p's
-//TODO Cast timer, expires after 1 minute with no release
-//TODO Code an achievement
-//TODO Code a quest
-//TODO Change weight & rarity code so that weight is generated after rarity, for heavier fish
-//TODO Rarity levels can only be reached with certain equipment. I.E max and min weights must be set lower than the number
-//TODO possibly new function for generating rarity which checks items equipped which have their own property setting the min / max
-//TODO Console testing
-//TODO Time based - Every 5 minutes can cast. Can choose whether to auto cast every 5 minutes, or let them stack for manual use
+// -- Code some QA database tools to reset data
+// -- Clean up the aquarium table code
+// -- replace textnodes with 'p's
+// -- Cast timer, expires after 1 minute with no release
+// -- Code an achievement
+// -- Code a quest
+// - Change weight & rarity code so that weight is generated after rarity, for heavier fish
+// -- Rarity levels can only be reached with certain equipment. I.E max and min weights must be set lower than the number
+// -- possibly new function for generating rarity which checks items equipped which have their own property setting
+// the min / max
+// -- Console testing
+// -- Time based - Every 5 minutes can cast. Can choose whether to auto cast every 5 minutes, or let them stack for
+// manual use
+// -- Mirror aquarium Table for lifetime data capture
