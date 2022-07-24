@@ -146,7 +146,7 @@ const showCatch = () => {
     catchModal.style.display = 'flex'
     catchQuality.innerHTML = latestCaughtFish.caught_quality;
     catchType.innerHTML = latestCaughtFish.caught_name;
-    catchWeight.innerHTML = latestCaughtFish.caught_weight_kg + ' kg';
+    catchWeight.innerHTML = latestCaughtFish.caught_weight_lbs + ' lbs';
     catchImage.src = latestCaughtFish.caught_fish_imgsrc;
 };
 
@@ -199,7 +199,7 @@ function successfulEventLog() {
     const newPara = document.createElement('p');
     const logContainer = document.getElementById('log');
 
-    newPara.innerHTML = `[${new Date().toLocaleTimeString()}] You cast out your line and reel in a <span>${latestCaughtFish.caught_quality}</span> ${latestCaughtFish.caught_name} weighing ${latestCaughtFish.caught_weight_kg}kg`;
+    newPara.innerHTML = `[${new Date().toLocaleTimeString()}] You cast out your line and reel in a <span>${latestCaughtFish.caught_quality}</span> ${latestCaughtFish.caught_name} weighing ${latestCaughtFish.caught_weight_lbs} lbs`;
     document.getElementById('log').appendChild(newPara);
 
     const spanArray = logContainer.querySelectorAll('span');
@@ -246,7 +246,7 @@ function fillAquariumTable() {
         whichCell.appendChild(newText);
     };
     createTextNode(latestCaughtFish.caught_name, fishNameCell);
-    createTextNode((latestCaughtFish.caught_weight_kg + ' kg'), fishWeightCell);
+    createTextNode((latestCaughtFish.caught_weight_lbs + ' lbs'), fishWeightCell);
     createTextNode(latestCaughtFish.caught_quality, fishRarityCell);
     //testing mini image function
     function setMiniImage() {

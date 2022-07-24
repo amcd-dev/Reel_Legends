@@ -96,15 +96,47 @@ li {
     display: flex;
 }
 
-/* Menu Bar Styling (Further button styling below) */
+/*---------------------*/
+/* Menu Bar Styling */
+/*---------------------*/
 
 #menu {
+    border-top: solid 2px var(--background-secondary);
+    border-bottom: solid 2px var(--background-secondary);
+    display: flex;
+    justify-content:space-evenly;
+    margin: 0 auto;
+    width: 1000px;
+    min-width: 250px;
+    background-color: var(--background-primary);
+}
+
+.menu-button-box {
     /*border: solid 1px red;*/
-    display: grid;
-    grid-template-columns: repeat(5, minmax(50px, 200px));
-    margin: 0rem auto;
+    display: flex;
+    width: 100%;
+    padding: 0 0.5rem;
+    background-color: var(--background-primary);
+}
+
+.menu-button {
+    border: none;
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    font-family: var(--content-font);
+    background-color: var(--background-primary);
+}
+
+.menu-button:hover {
     background-color: var(--background-secondary);
 }
+
+.menu-button:active {
+    transform: scale(0.75);
+    background-color: var(--background-secondary);
+}
+
 /*---------------------*/ 
 /* Main Game Container Styling */
 /*---------------------*/ 
@@ -113,40 +145,36 @@ li {
     margin: 1rem auto;
 }
 
-#menu {
-    border-top: solid 2px var(--background-secondary);
-    border-bottom: solid 2px var(--background-secondary);
-}
-
 .game-main-container {
     /*border: solid 1px red;*/
     display: grid;
-    grid-template-columns: repeat(5, minmax(50px, 200px));
-    grid-template-rows: repeat(5, minmax(50px, 200px));
+    grid-template-columns: repeat(10, minmax(25px, 100px));
+    grid-template-rows: repeat(10, minmax(25px, 100px));
     margin: 0 auto 1rem auto;
     background-color: var(--background-secondary);
     box-shadow: 0 10px 20px rgba(0,0,0,0.19), 0 6px 6px rgba(0,0,0,0.23);
 }
 
 .current-items-container {
-    border: solid 1px red;
+    /*border: solid 1px red;*/
     display: flex;
     flex-direction: row;
-    justify-content: stretch;
+    justify-content: center;
     align-items: flex-start;
     z-index: 1;
     grid-row: 1 / 2;
-    grid-column: 1 / 6;
+    grid-column: 1 / 11;
 }
 
 .item-box {
+    /*border: solid 2px var(--background-secondary);*/
     display: flex;
     flex-direction: column-reverse;
     align-items: center;
     justify-content: flex-end;
     gap: 0.5rem;
     z-index: 1;
-    margin: 0.15rem;
+    margin: 0 0.15rem;
     padding: 0.5rem;
     width: auto;
     height: auto;
@@ -157,8 +185,9 @@ li {
 
 .item-box img {
     /*border: solid 1px red;*/
-    height: 4.5rem;
-    width: 4.5rem;
+    height: 4rem;
+    width: 4rem;
+    background-color: rgba(220,220,220,0.75);
 }
 
 #cast {
@@ -166,13 +195,13 @@ li {
     justify-content: center;
     align-items: center;
     z-index: 1;
-    grid-row: 3 / 4;
-    grid-column: 3 / 4;
+    grid-row: 7 / 8;
+    grid-column: 4 / 7;
 }
 
 #log {
-    grid-row: 5 / 6;
-    grid-column: 1 / 6;
+    grid-row: 9 / 11;
+    grid-column: 1 / 11;
     z-index: 1;
     color: white;
     background-color: var(--color-black);
@@ -182,45 +211,27 @@ li {
 
 #environment {
     display: flex;
-    grid-row: 2 / 5;
-    grid-column: 1 / 6;
+    justify-content: center;
+    grid-row: 1 / 9;
+    grid-column: 1 / 11;
     z-index: 0;
+    overflow: hidden;
 }
 
 #environment img {
-    height: auto;
-    width: 100%;
+    height: 100%;
+    width: auto;
 }
 
 #exp {
     border: solid 4px var(--background-secondary);
-    grid-row: 4 / 5;
-    grid-column: 1 / 6;
+    grid-row: 8 / 9;
+    grid-column: 1 / 11;
     align-self: end;
     z-index: 1;
     height: 15%; 
     text-align: center;
 }
-
-/*#rod {*/
-/*    grid-row: 1 / 2;*/
-/*    grid-column: 5 / 6;*/
-/*}*/
-
-/*#reel {*/
-/*    grid-row: 2 / 3;*/
-/*    grid-column: 5 / 6;*/
-/*}*/
-
-/*#hook {*/
-/*    grid-row: 3 / 4;*/
-/*    grid-column: 5 / 6;*/
-/*}*/
-
-/*#special {*/
-/*    grid-row: 4 / 5;*/
-/*    grid-column: 5 / 6;*/
-/*}*/
 
 /*---------------------*/ 
 /* Stats container styling */
@@ -250,28 +261,15 @@ li {
 /*---------------------*/ 
 /* Button Styling */
 /*---------------------*/ 
-.menu-button {
-    border: none;
-    display: block;
-    width: 100%;
-    background-color: var(--background-primary);
-    font-family: var(--content-font);
-}
-
-.menu-button:hover {
-    background-color: var(--background-secondary);
-}
-
-.menu-button:active {
-    transform: scale(0.75);
-    background-color: var(--background-secondary);
-}
 
 #cast-button {
     font-family: var(--title-font);
     font-size: 3rem;
 }
 
+.item-drawer-button {
+    width: 100%;
+}
 /*---------------------*/ 
 /* Map Modal Styling */
 /*---------------------*/
